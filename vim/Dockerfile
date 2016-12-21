@@ -16,13 +16,6 @@ RUN apt-get update && apt-get install -y --force-yes --no-install-recommends \
     apt-get remove -y vim vim-runtime gvim && \
     apt-get clean
 
-# Optional, this is for C-family
-RUN wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|sudo apt-key add - && \
-    echo "deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-3.9 main" > /etc/apt/sources.list.d/llvm.list && \
-    echo "deb-src http://apt.llvm.org/trusty/ llvm-toolchain-trusty-3.9 main" >> /etc/apt/sources.list.d/llvm.list && \
-    apt-get update && apt-get install -y --force-yes --no-install-recommends \
-    clang-3.9 lldb-3.9
-
 # install latest vim
 RUN cd ~ && git clone https://github.com/vim/vim.git && cd vim && \
     ./configure --with-features=huge \
@@ -40,11 +33,11 @@ RUN cd ~ && git clone https://github.com/vim/vim.git && cd vim && \
     update-alternatives --install /usr/bin/editor editor /usr/bin/vim 1 && \
     update-alternatives --set editor /usr/bin/vim && \
     update-alternatives --install /usr/bin/vi vi /usr/bin/vim 1 && \
-    update-alternatives --set vi /usr/bin/vim
+    update-alternatives --set vi /usr/bin/vim && \
+    rm ~/vim -Rf
 
 RUN useradd -m dev && \
-    chsh -s /bin/zsh dev && \
-    mkdir /code && chown dev:dev /code -R
+    chsh -s /bin/zsh dev
 USER dev
 
 # install plugins
@@ -56,7 +49,11 @@ RUN git clone -b personalize git://github.com/teanoon/oh-my-zsh.git ~/.oh-my-zsh
     vim +PluginInstall +qall
 
 # build additional ycm_core
-# TODO add C-family support here too
-RUN cd ~/.vim && mkdir ycm_build && cd ycm_build && \
-    cmake -G "Unix Makefiles" . ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp && \
+ENV CLANG_URL http://releases.llvm.org/3.9.0/clang+llvm-3.9.0-x86_64-linux-gnu-ubuntu-14.04.tar.xz
+ENV CLANG_FILE_NAME clang+llvm-3.9.0-x86_64-linux-gnu-ubuntu-14.04
+
+RUN cd ~/.vim && \
+    wget ${CLANG_URL} && tar xf ${CLANG_FILE_NAME}.tar.xz && mv ${CLANG_FILE_NAME} clang_llvm && rm ${CLANG_FILE_NAME}.tar.xz && \
+    mkdir ycm_build && cd ycm_build && \
+    cmake -G "Unix Makefiles" -DPATH_TO_LLVM_ROOT=~/.vim/clang_llvm . ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp && \
     cmake --build . --target ycm_core --config Release
