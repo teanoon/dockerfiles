@@ -3,3 +3,5 @@ awscli/.aws
 dot-cms/db
 dot-cms/dotcms-app
 .zsh_history
+
+!.keep

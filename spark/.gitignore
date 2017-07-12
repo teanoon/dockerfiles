@@ -1,0 +1,4 @@
+.sbt
+.ivy2
+.IdeaIC*
+db/
