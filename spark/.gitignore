@@ -1,4 +1,5 @@
 .sbt
 .ivy2
 .IdeaIC*
+sample.json.log
 db/
