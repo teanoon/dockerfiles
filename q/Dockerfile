@@ -4,4 +4,5 @@ ADD q-text-as-data.deb /
 RUN dpkg -i /q-text-as-data.deb && \
     rm /q-text-as-data.deb
 
+WORKDIR /files
 ENTRYPOINT ["q"]
