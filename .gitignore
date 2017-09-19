@@ -1,5 +1,4 @@
 tensorflow-gpu/nvidia-375
-awscli/.aws
 dot-cms/db
 dot-cms/dotcms-app
 .zsh_history
