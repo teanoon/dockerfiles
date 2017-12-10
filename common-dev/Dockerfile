@@ -1,4 +1,5 @@
-FROM openjdk:8u131
+ARG BASE_IMAGE=openjdk:8u131
+FROM $BASE_IMAGE
 
 RUN apt-get update && apt-get install apt-transport-https && \
     echo "deb https://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list && \
@@ -8,7 +9,7 @@ RUN apt-get update && apt-get install apt-transport-https && \
     # common dev tools
     vim htop git openssh-client zsh tmux wget curl w3m less \
     # common x11 client dependencies
-    firefox libdbus-glib-1-2 \
+    firefox libdbus-glib-1-2 libxext6 libXtst6 \
     # better fonts
     ttf-wqy-microhei \
     # certificate
@@ -25,5 +26,5 @@ USER dev
 
 RUN git clone -b personalize https://github.com/teanoon/oh-my-zsh.git ~/.oh-my-zsh && \
     ln -s ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc && \
-    ln -s ~/.oh-my-zsh/templates/tmux.conf.template ~/.tmux.conf
+    ln -s ~/.oh-my-zsh/templates/tmux.conf.template.1.9 ~/.tmux.conf
 WORKDIR /code
