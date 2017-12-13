@@ -1,0 +1,35 @@
+version: '3'
+services:
+  dns:
+    build: dnscrypt
+    volumes:
+      - ./dnscrypt/config.conf:/Pcap_DNSProxy/Source/Release/Config.conf
+  geoip:
+    image: fiorix/freegeoip
+    command: '-http 0.0.0.0:80'
+    links:
+      - dns
+  ss:
+    image: mritd/shadowsocks
+    command: '-m "ss-local" -s "-c /config.json -s shadowbox-hk" -x -e "kcpclient" -k "-r shadowbox-hk:9091 -l :9091 -mode fast2"'
+    volumes:
+      - /boxes/shadowsocks/shadowbox-config.json:/config.json
+      - /etc/hosts:/etc/hosts
+    links:
+      - dns
+  privoxy:
+    build: toolbox
+    command: 'privoxy --no-daemon /etc/privoxy/config'
+    volumes:
+      - ./privoxy-config:/etc/privoxy/config
+    links:
+      - ss 
+      - dns
+      - geoip
+networks:
+  default:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.98.0.0/16
