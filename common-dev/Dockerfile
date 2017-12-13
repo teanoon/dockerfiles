@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install apt-transport-https && \
     echo "deb http://packages.linuxmint.com debian import" | tee /etc/apt/sources.list.d/firefox.list && \
     apt-get update && apt-get install -y --force-yes --no-install-recommends \
     # common dev tools
-    vim htop git openssh-client zsh tmux wget curl w3m less \
+    vim htop git openssh-client zsh tmux wget curl w3m less ssh netcat-openbsd \
     # common x11 client dependencies
     firefox libdbus-glib-1-2 libxext6 libXtst6 \
     # better fonts
