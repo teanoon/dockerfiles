@@ -4,19 +4,29 @@ services:
     build: dnscrypt
     volumes:
       - ./dnscrypt/config.conf:/Pcap_DNSProxy/Source/Release/Config.conf
+    networks:
+      default:
+        ipv4_address: 172.98.0.2
   geoip:
     image: fiorix/freegeoip
     command: '-http 0.0.0.0:80'
     links:
       - dns
+    networks:
+      default:
+        ipv4_address: 172.98.0.3
   ss:
     image: mritd/shadowsocks
     command: '-m "ss-local" -s "-c /config.json -s shadowbox-hk" -x -e "kcpclient" -k "-r shadowbox-hk:9091 -l :9091 -mode fast2"'
+    # command: '-m "ss-local" -s "-c /config.json"'
     volumes:
       - /boxes/shadowsocks/shadowbox-config.json:/config.json
       - /etc/hosts:/etc/hosts
     links:
       - dns
+    networks:
+      default:
+        ipv4_address: 172.98.0.4
   privoxy:
     build: toolbox
     command: 'privoxy --no-daemon /etc/privoxy/config'
@@ -26,6 +36,9 @@ services:
       - ss 
       - dns
       - geoip
+    networks:
+      default:
+        ipv4_address: 172.98.0.5
 networks:
   default:
     driver: bridge
