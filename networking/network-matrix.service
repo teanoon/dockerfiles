@@ -7,5 +7,7 @@ WorkingDirectory=/boxes/dockerfiles/networking
 ExecStart=/usr/local/bin/docker-compose -f /boxes/dockerfiles/networking/docker-compose.yml up
 ExecStop=/usr/local/bin/docker-compose -f /boxes/dockerfiles/networking/docker-compose.yml rm -sf
 Restart=always
+StandardOutput=null
+StandardError=syslog
 [Install]
 WantedBy=multi-user.target
