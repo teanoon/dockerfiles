@@ -10,8 +10,6 @@ services:
   geoip:
     image: fiorix/freegeoip
     command: '-http 0.0.0.0:80'
-    links:
-      - dns
     networks:
       default:
         ipv4_address: 172.98.0.3
@@ -22,8 +20,6 @@ services:
     volumes:
       - /boxes/shadowsocks/shadowbox-config.json:/config.json
       - /etc/hosts:/etc/hosts
-    links:
-      - dns
     networks:
       default:
         ipv4_address: 172.98.0.4
@@ -34,8 +30,6 @@ services:
       - ./privoxy-config:/etc/privoxy/config
     links:
       - ss 
-      - dns
-      - geoip
     networks:
       default:
         ipv4_address: 172.98.0.5
