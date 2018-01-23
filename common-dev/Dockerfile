@@ -19,7 +19,7 @@ RUN echo "deb http://packages.linuxmint.com debian import" | tee /etc/apt/source
 
 RUN useradd -m dev && chsh -s /bin/zsh dev && \
     mkdir /code && \
-    chown dev:dev /code -R 
+    chown dev:dev /code -R
 
 ARG MONGO_VERSION=3.2.18
 RUN curl -O https://downloads.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1604-${MONGO_VERSION}.tgz && \
@@ -30,9 +30,14 @@ RUN curl -O https://downloads.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1604-
     mv mongodb-linux-x86_64-ubuntu1604-${MONGO_VERSION} mongodb && \
     chown dev:dev mongodb -R
 
+ARG SCALA_VERSION=1.1.0
+RUN wget https://github.com/sbt/sbt/releases/download/v${SCALA_VERSION}/sbt-${SCALA_VERSION}.tgz && \
+    tar xzf sbt-${SCALA_VERSION}.tgz && rm sbt-${SCALA_VERSION}.tgz
+
 USER dev
 
 RUN git clone -b personalize https://github.com/teanoon/oh-my-zsh.git ~/.oh-my-zsh && \
     ln -s ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc && \
     ln -s ~/.oh-my-zsh/templates/tmux.conf.template.1 ~/.tmux.conf
+RUN echo "export PATH=/mongodb/bin:/sbt/bin:$PATH" >> ~/.zshrc
 WORKDIR /code
