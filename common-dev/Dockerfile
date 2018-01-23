@@ -21,6 +21,15 @@ RUN useradd -m dev && chsh -s /bin/zsh dev && \
     mkdir /code && \
     chown dev:dev /code -R 
 
+ARG MONGO_VERSION=3.2.18
+RUN curl -O https://downloads.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1604-${MONGO_VERSION}.tgz && \
+    curl -O https://downloads.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1604-${MONGO_VERSION}.tgz.sha256 && \
+    sha256sum -c mongodb-linux-x86_64-ubuntu1604-${MONGO_VERSION}.tgz.sha256 && \
+    rm mongodb-linux-x86_64-ubuntu1604-${MONGO_VERSION}.tgz.sha256 && \
+    tar xzf mongodb-linux-x86_64-ubuntu1604-${MONGO_VERSION}.tgz && rm mongodb-linux-x86_64-ubuntu1604-${MONGO_VERSION}.tgz && \
+    mv mongodb-linux-x86_64-ubuntu1604-${MONGO_VERSION} mongodb && \
+    chown dev:dev mongodb -R
+
 USER dev
 
 RUN git clone -b personalize https://github.com/teanoon/oh-my-zsh.git ~/.oh-my-zsh && \
