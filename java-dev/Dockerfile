@@ -1,5 +1,4 @@
-ARG BASE_IMAGE=openjdk:8
-FROM $BASE_IMAGE
+FROM openjdk:8
 
 RUN echo "deb http://packages.linuxmint.com debian import" | tee /etc/apt/sources.list.d/firefox.list && \
     apt-get update && apt-get install -y --force-yes --no-install-recommends \
