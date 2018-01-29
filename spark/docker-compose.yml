@@ -1,13 +1,13 @@
 version: '3'
 services:
   hadoop:
-    build: hadoop
+    image: teanoon/hadoop:2.8.2
     command: bash -c "./boot.sh && ./sbin/httpfs.sh start && ./bin/hdfs namenode"
     volumes:
       - hdfs-volume:/tmp/hadoop-root
       - ./hadoop/etc:/hadoop/etc
   hadoop-datanode:
-    image: spark_hadoop
+    image: teanoon/hadoop:2.8.2
     command: bash -c "./boot.sh && ./bin/hdfs datanode"
     volumes:
       - hdfs-data-volume:/tmp/hadoop-root
