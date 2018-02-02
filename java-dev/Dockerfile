@@ -3,7 +3,7 @@ FROM openjdk:8
 RUN echo "deb http://packages.linuxmint.com debian import" | tee /etc/apt/sources.list.d/firefox.list && \
     apt-get update && apt-get install -y --force-yes --no-install-recommends \
     # common dev tools
-    vim htop git openssh-client zsh tmux wget curl w3m less ssh netcat-openbsd dnsutils \
+    vim htop git openssh-client zsh tmux wget curl w3m less ssh netcat-openbsd dnsutils bc \
     # common x11 client dependencies
     firefox libdbus-glib-1-2 libxtst-dev \
     # python
@@ -38,5 +38,5 @@ USER dev
 RUN git clone -b personalize https://github.com/teanoon/oh-my-zsh.git ~/.oh-my-zsh && \
     ln -s ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc && \
     ln -s ~/.oh-my-zsh/templates/tmux.conf.template.1 ~/.tmux.conf
-RUN echo "export PATH=/mongodb/bin:/sbt/bin:$PATH" >> ~/.zshrc
+ENV PATH="/mongodb/bin:/sbt/bin:${PATH}"
 WORKDIR /code
