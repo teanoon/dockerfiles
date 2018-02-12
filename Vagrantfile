@@ -45,7 +45,7 @@ Vagrant.configure("2") do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
-  config.vm.synced_folder "C:\\boxes\\backup", "/backup"
+  config.vm.synced_folder "C:\\Users\\antic\\OneDrive\\backup", "/backup"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -57,7 +57,7 @@ Vagrant.configure("2") do |config|
 
     # Display the VirtualBox GUI when booting the machine
     vb.gui = false
-  
+
     # Customize hardware on the VM:
     vb.cpus = 4
     vb.memory = 8196
@@ -85,6 +85,11 @@ Vagrant.configure("2") do |config|
   SHELL
 
   config.vm.provision "dependencies", type: "shell", inline: <<-SHELL
+    apt-get update
+    apt-get install -y --no-install-recommends vim htop zsh bc openvpn
+  SHELL
+
+  config.vm.provision "docker", type: "shell", inline: <<-SHELL
     if [ ! -f /usr/bin/docker ]; then
       apt-get update
       apt-get install -y --no-install-recommends apt-transport-https ca-certificates curl software-properties-common
@@ -92,18 +97,28 @@ Vagrant.configure("2") do |config|
       apt-key fingerprint 0EBFCD88
       add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
       apt-get update
-      apt-get install -y --no-install-recommends docker-ce vim htop zsh
+      apt-get install -y --no-install-recommends docker-ce
     fi
 
     if [ ! -f /etc/docker/daemon.json ]; then
       echo '{ "graph": "/code/docker", "dns": ["8.8.8.8", "8.8.4.4"], "bip": "172.99.0.1/16", "registry-mirrors": ["https://registry.docker-cn.com"] }' > /etc/docker/daemon.json
       systemctl restart docker
     fi
+
+    if [ ! -f /usr/local/bin/docker-compose ]; then
+      curl -OL https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m`
+      curl -OL https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m`.sha256
+      sha256sum -c docker-compose-`uname -s`-`uname -m`.sha256
+      cp docker-compose-`uname -s`-`uname -m` /usr/local/bin/docker-compose
+      rm docker-compose-`uname -s`-`uname -m`.sha256 docker-compose-`uname -s`-`uname -m`
+      chmod +x /usr/local/bin/docker-compose
+    fi
   SHELL
 
   config.vm.provision "user", type: "shell", inline: <<-SHELL
     chsh -s /usr/bin/zsh vagrant
     usermod -aG docker vagrant
+    echo "%vagrant ALL=(ALL:ALL) NOPASSWD:ALL" > /etc/sudoers.d/vagrant
   SHELL
 
   config.vm.provision "dev", type: "shell", privileged: false, inline: <<-SHELL
