@@ -1,5 +1,7 @@
-FROM openjdk:8
+ARG BASE_IMAGE="openjdk:8"
+FROM ${BASE_IMAGE}
 
+USER root
 RUN echo "deb http://packages.linuxmint.com debian import" | tee /etc/apt/sources.list.d/firefox.list && \
     apt-get update && apt-get install -y --force-yes --no-install-recommends \
     # common dev tools
@@ -16,8 +18,9 @@ RUN echo "deb http://packages.linuxmint.com debian import" | tee /etc/apt/source
     dbus && dbus-uuidgen > /etc/machine-id && \
     rm -rf /var/lib/apt/lists/*
 
-RUN useradd -m dev && chsh -s /bin/zsh dev && \
-    mkdir /code && \
+RUN if [ ! -d /home/dev ]; then useradd -m dev; fi && \
+    chsh -s /bin/zsh dev && \
+    if [ ! -d /code ]; then mkdir /code; fi && \
     chown dev:dev /code -R
 
 ARG MONGO_VERSION=3.2.18
@@ -30,11 +33,10 @@ RUN curl -O https://downloads.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1604-
     chown dev:dev mongodb -R
 
 ARG SCALA_VERSION=1.1.0
-RUN wget https://github.com/sbt/sbt/releases/download/v${SCALA_VERSION}/sbt-${SCALA_VERSION}.tgz && \
+RUN curl -OL https://github.com/sbt/sbt/releases/download/v${SCALA_VERSION}/sbt-${SCALA_VERSION}.tgz && \
     tar xzf sbt-${SCALA_VERSION}.tgz && rm sbt-${SCALA_VERSION}.tgz
 
 USER dev
-
 RUN git clone -b personalize https://github.com/teanoon/oh-my-zsh.git ~/.oh-my-zsh && \
     ln -s ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc && \
     ln -s ~/.oh-my-zsh/templates/tmux.conf.template.1 ~/.tmux.conf
