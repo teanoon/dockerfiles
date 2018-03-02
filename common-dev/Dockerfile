@@ -48,6 +48,6 @@ RUN if [ ! -d /home/dev ]; then useradd -m dev; fi && \
 USER dev
 RUN git clone -b personalize https://github.com/teanoon/oh-my-zsh.git ~/.oh-my-zsh && \
     ln -s ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc && \
-    ln -s ~/.oh-my-zsh/templates/tmux.conf.template.1 ~/.tmux.conf
+    ln -s ~/.oh-my-zsh/templates/tmux.conf.template.2 ~/.tmux.conf
 ENV PATH="/mongodb/bin:/sbt/bin:${PATH}"
 WORKDIR /code
