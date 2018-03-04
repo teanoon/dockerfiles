@@ -3,25 +3,41 @@ Pin: release a=stable
 Pin-Priority: 1000
 
 Package: *
-Pin: release a=testing
+Pin: release a=unstable
 Pin-Priority: 2
 
-Package: libgtk-3-0
-Pin: release a=testing
-Pin-Priority: 1001
-
-Package: libgtk-3-common
-Pin: release a=testing
+Package: firefox
+Pin: release a=unstable
 Pin-Priority: 1001
 
 Package: libfontconfig1
-Pin: release a=testing
-Pin-Priority: 1001
-
-Package: libglib2.0-0
-Pin: release a=testing
+Pin: release a=unstable
 Pin-Priority: 1001
 
 Package: fontconfig-config
-Pin: release a=testing
+Pin: release a=unstable
+Pin-Priority: 1001
+
+Package: libnss3
+Pin: release a=unstable
+Pin-Priority: 1001
+
+Package: libgtk-3-0
+Pin: release a=unstable
+Pin-Priority: 1001
+
+Package: libgtk-3-common
+Pin: release a=unstable
+Pin-Priority: 1001
+
+Package: libfontconfig1
+Pin: release a=unstable
+Pin-Priority: 1001
+
+Package: libglib2.0-0
+Pin: release a=unstable
+Pin-Priority: 1001
+
+Package: fontconfig-config
+Pin: release a=unstable
 Pin-Priority: 1001

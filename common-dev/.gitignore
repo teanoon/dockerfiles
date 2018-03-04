@@ -1,2 +1,4 @@
-chrome-cache/*
-!chrome-cache/.keep
+container-cache/*
+container-config/*
+!container-cache/.keep
+!container-config/.keep
