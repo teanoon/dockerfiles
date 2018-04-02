@@ -15,15 +15,12 @@ ARG SCALA_VERSION=1.1.0
 RUN curl -OL https://github.com/sbt/sbt/releases/download/v${SCALA_VERSION}/sbt-${SCALA_VERSION}.tgz && \
     tar xzf sbt-${SCALA_VERSION}.tgz && rm sbt-${SCALA_VERSION}.tgz
 
-ADD debian-sid-sources.list /etc/apt/sources.list.d/sid.list
-ADD apt-preferences /etc/apt/preferences
-RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && \
-    echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | tee /etc/apt/sources.list.d/google-chrome.list && \
-    apt-get update && apt-get install -y --no-install-recommends \
+RUN echo "deb http://packages.linuxmint.com debian import" | tee /etc/apt/sources.list.d/firefox.list && \
+    apt-get update && apt-get install -y --no-install-recommends --allow-unauthenticated \
     # common dev tools
     vim htop git openssh-client zsh tmux wget curl w3m less ssh netcat-openbsd dnsutils bc \
     # common x11 client dependencies
-    google-chrome-stable firefox libgtk-3-0 libdbus-glib-1-2 libxtst-dev \
+    firefox libdbus-glib-1-2 libxtst-dev \
     # java source
     openjdk-8-source \
     # python
