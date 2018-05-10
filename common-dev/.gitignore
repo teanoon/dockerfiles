@@ -1,4 +1,6 @@
 container-cache/*
 container-config/*
+container-local/*
 !container-cache/.keep
 !container-config/.keep
+!container-local/.keep

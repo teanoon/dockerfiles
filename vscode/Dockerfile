@@ -16,3 +16,4 @@ ENV PATH="/code/node_modules/.bin:${PATH}"
 USER node 
 RUN git clone -b personalize https://github.com/teanoon/oh-my-zsh.git ~/.oh-my-zsh
 WORKDIR /code
+CMD [ "/usr/bin/code", "-w", "." ]

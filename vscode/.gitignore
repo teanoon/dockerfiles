@@ -1,0 +1,6 @@
+.config/*
+.vscode/*
+.pki/*
+!.config/.keep
+!.vscode/.keep
+!.pki/.keep
