@@ -3,9 +3,9 @@ Description=High-availablity network matrix
 After=network.target docker.service
 [Service]
 Type=simple
-WorkingDirectory=/boxes/dockerfiles/networking
-ExecStart=/usr/local/bin/docker-compose -f /boxes/dockerfiles/networking/docker-compose.yml up
-ExecStop=/usr/local/bin/docker-compose -f /boxes/dockerfiles/networking/docker-compose.yml rm -sf
+WorkingDirectory=/code/dockerfiles/networking
+ExecStart=/usr/local/bin/docker-compose -f /code/dockerfiles/networking/docker-compose.yml up
+ExecStop=/usr/local/bin/docker-compose -f /code/dockerfiles/networking/docker-compose.yml rm -sf
 Restart=always
 StandardOutput=null
 StandardError=syslog
