@@ -28,7 +28,7 @@ RUN echo "deb http://packages.linuxmint.com debian import" | tee /etc/apt/source
     # pillow
     libtiff5-dev libjpeg62-turbo-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev gifsicle \
     # mongo
-    libssl1.1 libssl-dev \
+    libssl1.0 libssl-dev \
     # better fonts
     ttf-wqy-microhei \
     # certificate
