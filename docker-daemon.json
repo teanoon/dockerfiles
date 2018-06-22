@@ -1,0 +1,6 @@
+{
+    "bip": "172.99.0.1/16",
+    "dns": ["8.8.8.8", "8.8.4.4"],
+    "data-root": "/code/docker",
+    "registry-mirrors": ["https://registry.docker-cn.com"]
+}
