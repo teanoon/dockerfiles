@@ -1,0 +1,13 @@
+[Unit]
+Description=x11-gnome-terminal
+[Service]
+Type=simple
+ExecStart=/bin/sh -c "DISPLAY=192.168.99.1:0.0 /usr/bin/gnome-terminal --app-id x11.terminal --full-screen --maximize --hide-menubar"
+Restart=always
+User=dev
+Group=dev
+WorkingDirectory=/code
+StandardOutput=null
+StandardError=syslog
+[Install]
+WantedBy=multi-user.target
