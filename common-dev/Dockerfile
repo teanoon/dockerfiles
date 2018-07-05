@@ -3,18 +3,6 @@ FROM ${BASE_IMAGE}
 
 USER root
 
-ARG MONGO_VERSION=3.2.18
-RUN curl -O https://downloads.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1604-${MONGO_VERSION}.tgz && \
-    curl -O https://downloads.mongodb.org/linux/mongodb-linux-x86_64-ubuntu1604-${MONGO_VERSION}.tgz.sha256 && \
-    sha256sum -c mongodb-linux-x86_64-ubuntu1604-${MONGO_VERSION}.tgz.sha256 && \
-    rm mongodb-linux-x86_64-ubuntu1604-${MONGO_VERSION}.tgz.sha256 && \
-    tar xzf mongodb-linux-x86_64-ubuntu1604-${MONGO_VERSION}.tgz && rm mongodb-linux-x86_64-ubuntu1604-${MONGO_VERSION}.tgz && \
-    mv mongodb-linux-x86_64-ubuntu1604-${MONGO_VERSION} mongodb
-
-ARG SCALA_VERSION=1.1.0
-RUN curl -OL https://github.com/sbt/sbt/releases/download/v${SCALA_VERSION}/sbt-${SCALA_VERSION}.tgz && \
-    tar xzf sbt-${SCALA_VERSION}.tgz && rm sbt-${SCALA_VERSION}.tgz
-
 RUN echo "deb http://packages.linuxmint.com debian import" | tee /etc/apt/sources.list.d/firefox.list && \
     apt-get update && apt-get install -y --no-install-recommends --allow-unauthenticated \
     # common dev tools
@@ -27,8 +15,6 @@ RUN echo "deb http://packages.linuxmint.com debian import" | tee /etc/apt/source
     python-dev \
     # pillow
     libtiff5-dev libjpeg62-turbo-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev gifsicle \
-    # mongo
-    libssl1.0 libssl-dev \
     # better fonts
     ttf-wqy-microhei \
     # certificate
@@ -46,5 +32,4 @@ USER dev
 RUN git clone -b personalize https://github.com/teanoon/oh-my-zsh.git ~/.oh-my-zsh && \
     ln -s ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc && \
     ln -s ~/.oh-my-zsh/templates/tmux.conf.template.2 ~/.tmux.conf
-ENV PATH="/mongodb/bin:/sbt/bin:${PATH}"
 WORKDIR /code
