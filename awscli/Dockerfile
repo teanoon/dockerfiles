@@ -5,7 +5,7 @@ RUN apt-get update && \
     python3 groff less python3-pip wget curl htop && \
     apt-get clean
 
-RUN pip3 install awscli
+RUN pip3 install awscli setuptools
 RUN useradd -m dev && chmod 777 /tmp -R
 USER dev
 
