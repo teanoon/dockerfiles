@@ -1,19 +1,5 @@
 version: '3'
 services:
-  dns:
-    image: teanoon/dnscrypt
-    volumes:
-      - ./dnscrypt/config.conf:/Pcap_DNSProxy/Source/Release/Config.conf
-    dns:
-      - 8.8.8.8
-    networks:
-      default:
-        ipv4_address: 172.98.0.2
-  geoip:
-    image: fiorix/freegeoip
-    command: '-http 0.0.0.0:80'
-    ports:
-      - 9880:80
   ss:
     image: mritd/shadowsocks
     # command: '-m "ss-local" -s "-c /config.json -s shadowbox-hk" -x -e "kcpclient" -k "-r shadowbox-hk:9099 -l :9099 -mode fast2"'
@@ -23,8 +9,6 @@ services:
     volumes:
       - ./shadowbox-config.json:/config.json
       - /etc/hosts:/etc/hosts
-    links:
-      - dns
     ports:
       - 1080:1080
   privoxy:
@@ -36,6 +20,11 @@ services:
       - ss
     ports:
       - 8118:8118
+  geoip:
+    image: fiorix/freegeoip
+    command: '-http 0.0.0.0:80'
+    ports:
+      - 9880:80
 networks:
   default:
     driver: bridge
