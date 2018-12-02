@@ -15,7 +15,8 @@ enable-edit-actions 0
 enforce-blocks 0
 buffer-limit 4096
 enable-proxy-authentication-forwarding 0
-forward-socks5 / ss:1080 .
+forward-socks5 / 172.98.0.1:1080 .
+forward        <[a-z0-9]*>       .
 # forward        192.168.*.*/     .
 # forward        10.*.*.*/        .
 # forward        172.*.*.*/       .

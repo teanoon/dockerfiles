@@ -1,23 +1,10 @@
 version: '3'
 services:
-  ss:
-    image: mritd/shadowsocks
-    # command: '-m "ss-local" -s "-c /config.json -s shadowbox-hk" -x -e "kcpclient" -k "-r shadowbox-hk:9099 -l :9099 -mode fast2"'
-    command: '-m "ss-local" -s "-c /config.json"'
-    # dns:
-    #   - dns
-    volumes:
-      - ./shadowbox-config.json:/config.json
-      - /etc/hosts:/etc/hosts
-    ports:
-      - 1080:1080
   privoxy:
     image: teanoon/toolbox
     command: 'privoxy --no-daemon /etc/privoxy/config'
     volumes:
       - ./privoxy-config:/etc/privoxy/config
-    links:
-      - ss
     ports:
       - 8118:8118
   geoip:
