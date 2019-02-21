@@ -1,7 +1,6 @@
-FROM debian:stretch
+FROM node:11
 
-MAINTAINER teanoon anticipationvu@gmail.com
-
+RUN npm install -g fx
 RUN apt-get update && apt-get -y --no-install-recommends install \
     # portal tools
     privoxy \
