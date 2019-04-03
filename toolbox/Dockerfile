@@ -2,8 +2,8 @@ FROM node:11
 
 RUN npm install -g fx
 RUN apt-get update && apt-get -y --no-install-recommends install \
-    # portal tools
-    privoxy \
+    # tools
+    privoxy supervisor \
     # network measurement
     mtr-tiny iperf iputils-ping \
     # common tools
