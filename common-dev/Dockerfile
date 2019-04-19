@@ -23,6 +23,7 @@ RUN useradd -m dev && \
 
 USER dev
 RUN git clone -b personalize https://github.com/teanoon/oh-my-zsh.git ~/.oh-my-zsh && \
+    git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions && \
     ln -s ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc && \
     ln -s ~/.oh-my-zsh/templates/tmux.conf.template.2 ~/.tmux.conf
 WORKDIR /code
