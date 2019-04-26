@@ -1,0 +1,8 @@
+version: '3'
+services:
+  chrome:
+    image: consol/centos-xfce-vnc
+    volumes:
+      - ./vnc/chromium:/headless/.config/chromium
+    ports:
+      - 9969:6901

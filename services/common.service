@@ -1,0 +1,13 @@
+[Unit]
+Description=Common and useful services
+After=network.target docker.service
+[Service]
+Type=simple
+WorkingDirectory=/code/dockerfiles/common
+ExecStart=/usr/local/bin/docker-compose -f /code/dockerfiles/common/docker-compose.yml up
+ExecStop=/usr/local/bin/docker-compose -f /code/dockerfiles/common/docker-compose.yml rm -sf
+Restart=always
+StandardOutput=null
+StandardError=syslog
+[Install]
+WantedBy=multi-user.target
